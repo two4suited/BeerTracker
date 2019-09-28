@@ -105,3 +105,6 @@ venv.bak/
 
 #Idea
 .idea/
+
+#cdk
+/infrastructure/cdk.out/

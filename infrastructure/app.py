@@ -6,6 +6,6 @@ from infrastructure.infrastructure_stack import InfrastructureStack
 
 
 app = core.App()
-InfrastructureStack(app, "infrastructure")
+InfrastructureStack(app, "BeerTracker")
 
 app.synth()
