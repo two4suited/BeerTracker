@@ -17,7 +17,7 @@ class InfrastructureStack(core.Stack):
             table_name="Beers",
             billing_mode=_dynamo.BillingMode.PAY_PER_REQUEST,
             partition_key=_dynamo.Attribute(
-                name="BreweryName",
+                name="LocationName",
                 type=_dynamo.AttributeType.STRING
             ),
             sort_key=_dynamo.Attribute(
