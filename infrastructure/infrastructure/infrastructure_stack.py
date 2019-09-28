@@ -1,4 +1,8 @@
-from aws_cdk import core
+from aws_cdk import (
+    core as core,
+    aws_lambda as _lambda
+)
+
 
 
 class InfrastructureStack(core.Stack):
