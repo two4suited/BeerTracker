@@ -1,6 +1,6 @@
 class Beer:
-    def __init__(self,breweryName,beerName,locationName,drank):
-        self.breweryName=breweryName
-        self.beerName=beerName
-        self.locationName=locationName
-        self.drank =drank
+    def __init__(self,BreweryName,BeerName,LocationName,Drank):
+        self.BreweryName=BreweryName
+        self.BeerName=BeerName
+        self.LocationName=LocationName
+        self.Drank =Drank

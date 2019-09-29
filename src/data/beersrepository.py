@@ -12,43 +12,43 @@ class BeersRepository:
     def addbeer(self, beer):
         response = self.table.put_item(
             Item={
-                "BeerName": beer.beerName,
-                "BreweryName": beer.breweryName,
-                "LocationName": beer.locationName
+                "BeerName": beer.BeerName,
+                "BreweryName": beer.BreweryName,
+                "LocationName": beer.LocationName,
+                "Drank": beer.Drank
             }
         )
 
     def getbeerbylocation(self, locationname):
         try:
-            response = self.table.get_item(
-                Key={
-                    "LocationName": locationname
-                }
+            response = self.table.query(
+                KeyConditionExpression=Key("LocationName").eq(locationname)
             )
         except ClientError as e:
             print(e.response["Error"]["Message"])
         else:
-            item = response["Item"]
+            item = response["Items"]
             return item
 
+    def getbeer(self, beer):
+        try:
+            response = self.table.query(
+                KeyConditionExpression=Key("LocationName").eq(beer.LocationName) & Key("BeerName").eq(beer.beerName)
+            )
+        except ClientError as e:
+            print(e.response["Error"]["Message"])
+        else:
+            item = response["Items"]
+            return item
 
-    def drink(self,locationname,beername):
-        self.table.update_item(
-            Key={
-                "LocationName": locationname,
-                "BeerName": beername
-            },
-            UpdateExpression="Set drank = :val1",
-            ExpressionAttributesValues={
-                ":val1": 1
-            }
-        )
+    def drink(self, beer):
+        beer.Drank = True
+        self.addbeer(beer)
 
-    def delete(self,beer):
+    def delete(self, beer):
         self.table.delete_item(
             Key={
-                "LocationName": beer.locationName,
-                "BeerName": beer.beerName
+                "LocationName": beer.LocationName,
+                "BeerName": beer.BeerName
             }
         )
-
