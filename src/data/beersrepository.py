@@ -6,11 +6,11 @@ from botocore.exceptions import ClientError
 
 class BeersRepository:
     def __init__(self):
-        self.client = boto3.dynamodb.client()
+        client = boto3.resource("dynamodb")
+        self.table = client.Table("Beers")
 
     def addbeer(self, beer):
-        response = self.client.put_item(
-            TableName="Beers",
+        response = self.table.put_item(
             Item={
                 "BeerName": beer.beerName,
                 "BreweryName": beer.breweryName,
@@ -20,7 +20,7 @@ class BeersRepository:
 
     def getbeerbylocation(self, locationname):
         try:
-            response = self.client.get_item(
+            response = self.table.get_item(
                 Key={
                     "LocationName": locationname
                 }
@@ -30,3 +30,25 @@ class BeersRepository:
         else:
             item = response["Item"]
             return item
+
+
+    def drink(self,locationname,beername):
+        self.table.update_item(
+            Key={
+                "LocationName": locationname,
+                "BeerName": beername
+            },
+            UpdateExpression="Set drank = :val1",
+            ExpressionAttributesValues={
+                ":val1": 1
+            }
+        )
+
+    def delete(self,beer):
+        self.table.delete_item(
+            Key={
+                "LocationName": beer.locationName,
+                "BeerName": beer.beerName
+            }
+        )
+
