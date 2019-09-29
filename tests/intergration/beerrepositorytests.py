@@ -1,12 +1,8 @@
-import unittest
-import json
-
 from src.data.beersrepository import BeersRepository
 from src.models.beer import Beer
-from src.helpers.dict2obj import Dict2Obj
 
 
-beer = Beer("Test", "TestBeer", "TestLocation",False)
+beer = Beer("Test", "TestBeer", "TestLocation",False,None,None)
 beerrepo = BeersRepository()
 
 print("Adding Beer")
@@ -22,7 +18,8 @@ for be in beers:
     print(f"Beername {b.BeerName}")
     print(f"Beer Drank? {b.Drank}")
     print(f"Drink {b.BeerName}")
-    beerrepo.drink(b)
+    b.Drink()
+    beerrepo.update(b)
     print(f"Beer Drank? {b.Drank}")
 
 print("Deleting Beer")
